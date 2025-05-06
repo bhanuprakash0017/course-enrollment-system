@@ -1,179 +1,142 @@
 # 🎓 Course Enrollment Management System
 
-A complete RESTful web application built using **Java 21**, **Spring Boot 3**, and **PostgreSQL**, allowing administrators to manage courses, students, and their enrollments.
+A robust, modular, and scalable RESTful backend application developed using **Java 21**, **Spring Boot 3**, and **PostgreSQL**.  
+This project models a real-world academic system where students can be registered, enrolled in courses, and tracked efficiently with clean API design and a maintainable architecture.
 
 ---
 
-## 📚 Table of Contents
+## 💼 Executive Summary
 
-- [Project Overview](#project-overview)
-- [Tech Stack](#tech-stack)
-- [Features](#features)
-- [Folder Structure](#folder-structure)
-- [How to Run](#how-to-run)
-- [API Endpoints](#api-endpoints)
-- [Sample JSON Data](#sample-json-data)
-- [Postman Collection](#postman-collection)
-- [Database Schema](#database-schema)
-- [Screenshots](#screenshots)
-- [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
-- [FAQ](#faq)
-- [Author](#author)
-- [License](#license)
+> This project demonstrates mastery in designing and implementing a well-layered backend application using modern Java technologies.  
+It includes CRUD operations, relational data modeling, RESTful design principles, proper use of JPA relationships, and clean separation of concerns — making it ideal for showcasing enterprise-grade development practices.
 
 ---
 
-## 🧠 Project Overview
+## 🧠 System Overview
 
-This project simulates an academic course management system:
+### 🏛 Modules:
+- **Student Management**: CRUD operations on student records
+- **Course Management**: CRUD operations on courses
+- **Enrollment System**: Many-to-Many relational logic with timestamping
 
-- 🎓 Add, edit, view, and delete **courses**  
-- 👨‍🎓 Manage **students** and their details  
-- 🔁 Enroll students in multiple courses  
-- 📊 Retrieve lists of courses a student is enrolled in or students enrolled in a course  
-- 💾 All data is persisted in a PostgreSQL database  
-
-Designed with clean 3-layer architecture:
-- Controller → Service → Repository
+### 🧩 Core Concepts:
+- Multi-entity design with real-world relationships
+- DTO-ready service layer (can be extended for validation/mapping)
+- Repository abstraction with Spring Data JPA
+- Domain-centric design
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Category       | Technology             |
-|----------------|------------------------|
-| Language        | Java 21               |
-| Framework       | Spring Boot 3.x       |
-| ORM             | Spring Data JPA       |
-| Database        | PostgreSQL            |
-| Build Tool      | Maven                 |
-| Dev Tools       | Lombok, Postman       |
-| IDE             | IntelliJ IDEA         |
+| Layer           | Tech                            |
+|----------------|----------------------------------|
+| Language        | Java 21                         |
+| Framework       | Spring Boot 3.x                 |
+| ORM             | Spring Data JPA                 |
+| Database        | PostgreSQL                      |
+| Build Tool      | Maven                           |
+| Boilerplate     | Lombok                          |
+| Testing         | Postman (manual testing)        |
+| Future-ready    | Swagger, JUnit5, Docker         |
 
 ---
 
-## ✅ Features
-
-- ➕ Add / 🔄 Update / ❌ Delete courses & students
-- 📥 Enroll students into multiple courses
-- 📤 Fetch all enrollments or per student/course
-- 🧩 Many-to-Many mapping using a join table (`Enrollment`)
-- 🌐 REST APIs with clear and consistent structure
-- 🔐 Easily extendable to support authentication, frontend, etc.
-
----
-
-## 📦 Folder Structure
+## 📦 Project Structure
 
 ```
-course-enrollment-system/
-├── controller/         → Handles HTTP requests
-├── service/            → Business logic interfaces
-├── service/impl/       → Logic implementations
-├── entity/             → JPA entity models
-├── repository/         → JPA interfaces
-├── resources/
-│   ├── application.properties → DB config
-├── CourseEnrollementApplication.java → Main class
+com.bhanu.courseenrollment
+├── controller         → REST Controllers
+├── service            → Interfaces
+├── service.impl       → Business Logic
+├── entity             → JPA Entities
+├── repository         → Spring Data JPA Repos
+└── resources
+    └── application.properties
 ```
 
 ---
 
-## 🚀 How to Run
+## 🚀 Setup Instructions
 
-1. **Clone the project**
+1. **Clone the Repository**
 ```bash
 git clone https://github.com/bhanuprakash0017/course-enrollment-system.git
 cd course-enrollment-system
 ```
 
-2. **Configure PostgreSQL DB**
-- DB name: `course_enrollment`
-- Update the `application.properties`:
+2. **Database Configuration**
+- Create PostgreSQL DB: `course_enrollment`
+- Update the following in `application.properties`:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/course_enrollment
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.show-sql=true
 ```
 
-3. **Run the app**
+3. **Run the Project**
 ```bash
 ./mvnw spring-boot:run
 ```
 
-4. **Test with Postman**
-- Use endpoints like `/students`, `/courses`, `/enrollments`
+4. **API Testing**
+- Import endpoints into Postman
+- Use sample data for Students, Courses, and Enrollments
 
 ---
 
-## 🔌 API Endpoints
-
-### 📘 Courses
-| Method | Endpoint         | Description          |
-|--------|------------------|----------------------|
-| POST   | `/courses`       | Create a course      |
-| GET    | `/courses`       | Get all courses      |
-| GET    | `/courses/{id}`  | Get course by ID     |
-| PUT    | `/courses/{id}`  | Update course        |
-| DELETE | `/courses/{id}`  | Delete course        |
+## 📊 API Overview
 
 ### 👨‍🎓 Students
-| Method | Endpoint         | Description          |
-|--------|------------------|----------------------|
-| POST   | `/students`      | Create student       |
-| GET    | `/students`      | Get all students     |
-| GET    | `/students/{id}` | Get student by ID    |
-| PUT    | `/students/{id}` | Update student       |
-| DELETE | `/students/{id}` | Delete student       |
+| Verb | Endpoint          | Description         |
+|------|-------------------|---------------------|
+| GET  | `/students`       | Get all students    |
+| POST | `/students`       | Create new student  |
+| PUT  | `/students/{id}`  | Update student      |
+| DELETE | `/students/{id}`| Delete student      |
+
+### 📘 Courses
+| Verb | Endpoint         | Description         |
+|------|------------------|---------------------|
+| GET  | `/courses`       | Get all courses     |
+| POST | `/courses`       | Create new course   |
+| PUT  | `/courses/{id}`  | Update course       |
+| DELETE | `/courses/{id}`| Delete course       |
 
 ### 🔗 Enrollments
-| Method | Endpoint                                      | Description                          |
-|--------|-----------------------------------------------|--------------------------------------|
-| POST   | `/enrollments?studentId=1&courseId=2`         | Enroll student in a course           |
-| GET    | `/enrollments`                                | Get all enrollments                  |
-| GET    | `/enrollments/students/{studentId}/courses`   | Get courses by student ID            |
-| GET    | `/enrollments/courses/{courseId}/students`    | Get students by course ID            |
+| Verb | Endpoint                                              | Description                          |
+|------|-------------------------------------------------------|--------------------------------------|
+| POST | `/enrollments?studentId=1&courseId=2`                | Enroll student to course             |
+| GET  | `/enrollments`                                       | Get all enrollments                  |
+| GET  | `/enrollments/students/{studentId}/courses`          | Courses by student                   |
+| GET  | `/enrollments/courses/{courseId}/students`           | Students by course                   |
 
 ---
 
-## 📄 Sample JSON Data
+## 📄 Sample JSON
 
 ### ➕ Student
 ```json
 {
-  "name": "Sneha Verma",
-  "email": "sneha@example.com",
-  "contactNumber": "9123456789",
-  "address": "MG Road, Pune"
+  "name": "Rahul Mehta",
+  "email": "rahul.mehta@example.com",
+  "contactNumber": "9876543210",
+  "address": "Bangalore, India"
 }
 ```
 
 ### ➕ Course
 ```json
 {
-  "name": "Java 21 Bootcamp",
-  "description": "Advanced Java course with Spring Boot",
+  "name": "Spring Boot & Microservices",
+  "description": "Build real-world APIs using Spring Boot",
   "duration": "6 weeks",
-  "fees": 2500.0
+  "fees": 2999.00
 }
 ```
-
----
-
-## 📥 Postman Collection
-
-You can create a Postman collection like:
-- `POST /students` → Add student
-- `POST /courses` → Add course
-- `POST /enrollments` → Enroll student
-- `GET /enrollments/students/1/courses` → Courses by student
-- `GET /enrollments/courses/2/students` → Students in course
-
-*Optionally export and attach your Postman collection JSON in the repo.*
 
 ---
 
@@ -203,46 +166,49 @@ ENROLLMENT
 
 ---
 
-## 🖼️ Screenshots
+## 📸 Optional Screenshots
 
-You can attach:
-- Postman test results
-- pgAdmin tables
-- IntelliJ project structure
-- DB schema diagram
+<details>
+  <summary>Postman Test Screenshot</summary>
+  <img src="screenshots/postman-demo.png" width="600"/>
+</details>
 
-
-## 🤝 Contributing
-
-1. Fork this repository
-2. Create your feature branch (`git checkout -b feature/my-feature`)
-3. Commit your changes (`git commit -m 'Add some feature'`)
-4. Push to the branch (`git push origin feature/my-feature`)
-5. Create a pull request
+<details>
+  <summary>pgAdmin Table View</summary>
+  <img src="screenshots/db-view.png" width="600"/>
+</details>
 
 ---
 
-## ❓ FAQ
+## 🌟 Future Enhancements
 
-**Q: Is the DB schema auto-generated?**  
-A: Yes, using `spring.jpa.hibernate.ddl-auto=update`.
-
-**Q: Can I switch to MySQL?**  
-A: Yes, just change the dialect and driver.
-
-**Q: What if I get connection errors?**  
-A: Ensure PostgreSQL is running and credentials are correct.
+- Add Swagger/OpenAPI documentation
+- Role-based authorization (Admin vs User)
+- Integration with frontend (React/Angular)
+- Dockerize for container-based deployment
+- CI/CD pipeline with GitHub Actions
 
 ---
 
-## 👨‍💻 Author
+## 🙋 FAQ
+
+> **Q: Why a separate `Enrollment` entity instead of direct ManyToMany?**  
+> A: This allows for richer relationship metadata like `enrollmentDate`.
+
+> **Q: Can this be deployed to cloud (AWS/GCP)?**  
+> A: Yes. App is stateless and DB-ready — Docker + RDS can handle it.
+
+---
+
+## ✍️ Author
 
 **Bhanu Prakash**  
-📧 kopparapubhanuprakash017@gmail.com  
-🔗 [GitHub Profile](https://github.com/bhanuprakash0017)
+📧 bhanuprakash0017@gmail.com  
+🔗 [GitHub](https://github.com/bhanuprakash0017)
 
 ---
 
 ## 📄 License
 
-This project is for educational and demonstration purposes only.
+This repository is licensed for educational and open-source usage. Feel free to fork, enhance, and contribute.
+
