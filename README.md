@@ -211,21 +211,6 @@ You can attach:
 - IntelliJ project structure
 - DB schema diagram
 
-Example:
-![API Test Screenshot](screenshots/postman-test.png)
-
----
-
-## 🌱 Future Enhancements
-
-- Add Swagger/OpenAPI docs
-- Add role-based user login (admin vs student)
-- Export to Excel/PDF
-- Deploy on AWS/GCP or Render
-- Add unit tests using JUnit + Mockito
-- Add frontend in React/Angular
-
----
 
 ## 🤝 Contributing
 
@@ -253,7 +238,7 @@ A: Ensure PostgreSQL is running and credentials are correct.
 ## 👨‍💻 Author
 
 **Bhanu Prakash**  
-📧 bhanuprakash0017@gmail.com  
+📧 kopparapubhanuprakash017@gmail.com  
 🔗 [GitHub Profile](https://github.com/bhanuprakash0017)
 
 ---
